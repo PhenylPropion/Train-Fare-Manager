@@ -1,2 +1,82 @@
 # Train-Fare-Manager
-This Python app uses Tkinter for the GUI to load and display employee data from a CSV file. It includes features like file dialogs for selecting the CSV file, displaying the employee list in a tree view, and error handling with message boxes.Tkinterを使用してGUIを作成し、CSVファイルから従業員データを読み込み表示します。CSVファイル選択のファイルダイアログ、ツリービューでの従業員リスト表示、メッセージボックスによるエラー処理機能を含みます
+# 従業員データ管理アプリケーション
+
+このPythonアプリケーションは、Tkinterを使用してGUIを作成し、CSVファイルから従業員データを読み込み表示します。
+
+## 特徴
+
+- CSVファイルから従業員データを読み込み
+- 従業員リストをツリービューに表示
+- ファイルダイアログを使用してCSVファイルを選択
+- エラー処理とメッセージボックスによるユーザーフィードバック
+
+## 必要条件
+
+- Python 3.x
+- 以下のPythonライブラリ
+  - tkinter
+  - requests
+  - beautifulsoup4
+  - pycryptodome
+  - base58
+
+## インストール
+
+必要なライブラリをインストールするには、以下のコマンドを実行してください：
+
+```sh
+pip install requests beautifulsoup4 pycryptodome base58
+
+### README.md
+
+```markdown
+# 従業員データ管理アプリケーション
+
+このPythonアプリケーションは、Tkinterを使用してGUIを作成し、CSVファイルから従業員データを読み込み表示します。
+
+## 特徴
+
+- CSVファイルから従業員データを読み込み
+- 従業員リストをツリービューに表示
+- ファイルダイアログを使用してCSVファイルを選択
+- エラー処理とメッセージボックスによるユーザーフィードバック
+
+## 必要条件
+
+- Python 3.x
+- 以下のPythonライブラリ
+  - tkinter
+  - requests
+  - beautifulsoup4
+  - pycryptodome
+  - base58
+
+## インストール
+
+必要なライブラリをインストールするには、以下のコマンドを実行してください：
+
+```sh
+pip install requests beautifulsoup4 pycryptodome base58
+```
+
+## 使い方
+
+1.  アプリケーションを実行します。
+2.  ライセンスキーを入力する
+3. 「ファイルを開く」ボタンをクリックして、従業員の ID,氏名,最寄り駅 形式のCSVファイルを選択します。
+4.  従業員データがツリービューに表示されます。
+5.  右上の入力欄に到着駅を入力する
+6. 「運賃を計算する」ボタンをクリックする。
+7.  下部に情報が表示される
+
+## ライセンス
+
+このプロジェクトは以下の条件の下で提供されています。
+1. 営利目的のために使用することを禁じる
+2. 再配布を禁じる
+3. 改造、改変等を禁じる
+4. ソフトウェアは「現状有姿」で提供され、商品性、特定目的への適合性、および権利の非侵害性に関する保証を含むがこれらに限定されず、明示的であるか黙示的であるかを問わず、いかなる種類の保証も行われません。著作者または著作権者は、契約、不法行為、またはその他の行為であるかを問わず、ソフトウェアまたはソフトウェアの使用もしくはその他に取り扱いに起因または関連して生じるいかなる請求、損害賠償、その他の責任について、一切の責任を負わない。
+
+## 貢献
+
+バグ報告や機能リクエストは、GitHubのIssueトラッカーを使用してください。プルリクエストも歓迎します。
