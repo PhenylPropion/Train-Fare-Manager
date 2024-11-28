@@ -26,36 +26,6 @@
 
 pip install requests beautifulsoup4 pycryptodome base58
 
-
-# 従業員データ管理アプリケーション
-
-このPythonアプリケーションは、Tkinterを使用してGUIを作成し、CSVファイルから従業員データを読み込み表示します。
-
-## 特徴
-
-- CSVファイルから従業員データを読み込み
-- 従業員リストをツリービューに表示
-- ファイルダイアログを使用してCSVファイルを選択
-- エラー処理とメッセージボックスによるユーザーフィードバック
-
-## 必要条件
-
-- Python 3.x
-- 以下のPythonライブラリ
-  - tkinter
-  - requests
-  - beautifulsoup4
-  - pycryptodome
-  - base58
-
-## インストール
-
-必要なライブラリをインストールするには、以下のコマンドを実行してください：
-
-```sh
-pip install requests beautifulsoup4 pycryptodome base58
-```
-
 ## 使い方
 
 1.  アプリケーションを実行します。
