@@ -4,6 +4,7 @@
 このPythonアプリケーションは、Tkinterを使用してGUIを作成し、CSVファイルから従業員データを読み込み表示します。
 
 .exe もしくは .app (Python実行環境不要)で使いたい場合は、メインページ右のRelease(リリース) からダウンロードしてください。
+リンク：https://github.com/PhenylPropion/Train-Fare-Manager/releases
 
 ## 特徴
 
