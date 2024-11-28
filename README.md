@@ -24,12 +24,9 @@
 
 必要なライブラリをインストールするには、以下のコマンドを実行してください：
 
-```sh
 pip install requests beautifulsoup4 pycryptodome base58
 
-### README.md
 
-```markdown
 # 従業員データ管理アプリケーション
 
 このPythonアプリケーションは、Tkinterを使用してGUIを作成し、CSVファイルから従業員データを読み込み表示します。
