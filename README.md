@@ -9,6 +9,7 @@ Pyinstallerを使用してexe化する関係上、実際はすべての機能を
 
 .exe もしくは .app (Python実行環境不要)で使いたい場合は、メインページ右のRelease(リリース) からダウンロードしてください。
 リンク：https://github.com/PhenylPropion/Train-Fare-Manager/releases
+こちらからダウンロードしたものは何もしなくとも解凍後にすぐ使用できます。
 
 ## 特徴
 
