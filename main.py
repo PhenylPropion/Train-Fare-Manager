@@ -5,19 +5,19 @@ from src.gui.license_window import LicenseWindow
 from src.utils.license_handler import verify_license
 
 
-def main():
-    # ライセンスの確認
-    license_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "license_key.txt")
-
-    if not os.path.exists(license_file):
-        license_window = LicenseWindow()
-        if not license_window.verify_and_save():
-            sys.exit(1)
-
-    # メインウィンドウの起動
-    app = MainWindow()
-    app.run()
-
-
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    root.withdraw()  # メインウィンドウを一時的に隠す
+
+    # ライセンスキーが保存されているか確認
+    if os.path.exists(LICENSE_FILE):
+        with open(LICENSE_FILE, "r") as file:
+            saved_license_key = file.read().strip()
+            if check_date(saved_license_key):
+                main()
+            else:
+                create_license_window(root)
+    else:
+        create_license_window(root)
+
+    root.mainloop()
