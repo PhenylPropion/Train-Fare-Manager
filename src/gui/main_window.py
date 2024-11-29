@@ -1,129 +1,47 @@
-import tkinter as tk
-from tkinter import ttk, messagebox, filedialog
-from ..utils.file_handler import load_file, save_file
+def main():
+    global employee_tree, destination_entry, result_tree, license_entry
+
+    # メインウィンドウ
+    root = tk.Tk()
+    root.title("運賃マネージャー《1.1》")
+    root.geometry("1020x600")
+
+    # ウィンドウを閉じるときの処理を設定
+    root.protocol("WM_DELETE_WINDOW", on_closing)
+
+    # ライセンス有効期限の表示
+    formatted_expiry = f"{expiry[:4]}/{expiry[4:6]}/{expiry[6:]}"
+    tk.Label(root, text=f"ライセンス有効期限: {formatted_expiry}", anchor="w").grid(row=0, column=0, columnspan=2, sticky="w", padx=10, pady=5)
 
 
-class MainWindow:
-    def __init__(self):
-        self.root = tk.Tk()
-        self.root.title("運賃マネージャー《1.1》")
-        self.root.geometry("1020x600")
-        self.setup_ui()
+    # ファイル読み込み部分
+    tk.Button(root, text="従業員データを読み込む", command=load_file).grid(row=0, column=0, columnspan=2, pady=10)
 
-    def setup_ui(self):
-        # UIコンポーネントの設定
-        self.create_employee_tree()
-        self.create_destination_entry()
-        self.create_result_tree()
-        self.create_buttons()
+    # 到着駅入力
+    tk.Label(root, text="到着駅:").grid(row=1, column=0, padx=10, pady=5, sticky="e")
+    destination_entry = tk.Entry(root, width=30)
+    destination_entry.grid(row=1, column=1, padx=10, pady=5)
 
-    def create_employee_tree(self):
-        """従業員データを表示するTreeviewを作成"""
-        # フレームの作成
-        tree_frame = ttk.Frame(self.root)
-        tree_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+    # 従業員リスト
+    tk.Label(root, text="従業員リスト:").grid(row=2, column=0, columnspan=2)
+    employee_tree = ttk.Treeview(root, columns=("ID", "名前", "出発駅"), show="headings", height=8)
+    employee_tree.grid(row=3, column=0, columnspan=2, padx=10, pady=5)
+    employee_tree.heading("ID", text="ID")
+    employee_tree.heading("名前", text="名前")
+    employee_tree.heading("出発駅", text="出発駅")
 
-        # スクロールバーの作成
-        scrollbar_y = ttk.Scrollbar(tree_frame, orient=tk.VERTICAL)
-        scrollbar_x = ttk.Scrollbar(tree_frame, orient=tk.HORIZONTAL)
+    # 運賃計算ボタン
+    tk.Button(root, text="運賃を計算する", command=calculate_fares).grid(row=4, column=0, columnspan=2, pady=10)
 
-        # Treeviewの作成
-        self.employee_tree = ttk.Treeview(
-            tree_frame,
-            columns=("名前", "部署", "出発地", "目的地", "料金", "日付"),
-            show="headings",
-            yscrollcommand=scrollbar_y.set,
-            xscrollcommand=scrollbar_x.set
-        )
+    # 結果表示
+    tk.Label(root, text="運賃計算結果:").grid(row=5, column=0, columnspan=2)
+    result_tree = ttk.Treeview(root, columns=("ID", "名前", "出発駅", "到着駅", "運賃"), show="headings", height=8)
+    result_tree.grid(row=6, column=0, columnspan=2, padx=10, pady=5)
+    result_tree.heading("ID", text="ID")
+    result_tree.heading("名前", text="名前")
+    result_tree.heading("出発駅", text="出発駅")
+    result_tree.heading("到着駅", text="到着駅")
+    result_tree.heading("運賃", text="運賃")
 
-        # スクロールバーの設定
-        scrollbar_y.config(command=self.employee_tree.yview)
-        scrollbar_x.config(command=self.employee_tree.xview)
-        scrollbar_y.pack(side=tk.RIGHT, fill=tk.Y)
-        scrollbar_x.pack(side=tk.BOTTOM, fill=tk.X)
-
-        # カラム見出しの設定
-        self.employee_tree.heading("名前", text="名前")
-        self.employee_tree.heading("部署", text="部署")
-        self.employee_tree.heading("出発地", text="出発地")
-        self.employee_tree.heading("目的地", text="目的地")
-        self.employee_tree.heading("料金", text="料金")
-        self.employee_tree.heading("日付", text="日付")
-
-        # カラム幅の設定
-        self.employee_tree.column("名前", width=100, minwidth=100)
-        self.employee_tree.column("部署", width=100, minwidth=100)
-        self.employee_tree.column("出発地", width=150, minwidth=150)
-        self.employee_tree.column("目的地", width=150, minwidth=150)
-        self.employee_tree.column("料金", width=100, minwidth=100)
-        self.employee_tree.column("日付", width=100, minwidth=100)
-
-        # Treeviewの配置
-        self.employee_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-
-        # 選択イベントのバインド
-        self.employee_tree.bind('<<TreeviewSelect>>', self.on_tree_select)
-
-        # 右クリックメニューの作成
-        self.context_menu = tk.Menu(self.root, tearoff=0)
-        self.context_menu.add_command(label="削除", command=self.delete_selected_item)
-        self.employee_tree.bind("<Button-3>", self.show_context_menu)
-
-    def on_tree_select(self, event):
-        """ツリーアイテムが選択されたときの処理"""
-        selected_items = self.employee_tree.selection()
-        if selected_items:
-            item = selected_items[0]
-            values = self.employee_tree.item(item)['values']
-            # 選択されたアイテムの値を他のウィジェットに反映する処理など
-
-    def show_context_menu(self, event):
-        """右クリックメニューを表示"""
-        item = self.employee_tree.identify_row(event.y)
-        if item:
-            self.employee_tree.selection_set(item)
-            self.context_menu.post(event.x_root, event.y_root)
-
-    def delete_selected_item(self):
-        """選択されたアイテムを削除"""
-        selected_items = self.employee_tree.selection()
-        if selected_items:
-            if messagebox.askyesno("確認", "選択したアイテムを削除しますか？"):
-                for item in selected_items:
-                    self.employee_tree.delete(item)
-
-    def add_employee(self, name, department, from_location, to_location, fare, date):
-        """従業員データをツリーに追加"""
-        self.employee_tree.insert(
-            "",
-            tk.END,
-            values=(name, department, from_location, to_location, fare, date)
-        )
-
-    def clear_tree(self):
-        """ツリーの全データをクリア"""
-        for item in self.employee_tree.get_children():
-            self.employee_tree.delete(item)
-
-    def get_all_employees(self):
-        """ツリーの全データを取得"""
-        employees = []
-        for item in self.employee_tree.get_children():
-            values = self.employee_tree.item(item)['values']
-            employees.append({
-                '名前': values[0],
-                '部署': values[1],
-                '出発地': values[2],
-                '目的地': values[3],
-                '料金': values[4],
-                '日付': values[5]
-            })
-        return employees
-
-    def on_closing(self):
-        self.root.quit()
-        self.root.destroy()
-
-    def run(self):
-        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
-        self.root.mainloop()
+    # アプリ実行
+    root.mainloop()
