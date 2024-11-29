@@ -1,7 +1,3 @@
-from Crypto.Cipher import AES
-import base58
-import os
-
 def verify_license(license_key):
     # ライセンス検証ロジック
     license_key = license_entry.get()
