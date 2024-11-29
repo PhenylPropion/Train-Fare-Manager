@@ -1,22 +1,11 @@
-import tkinter as tk
-from tkinter import messagebox
-from ..utils.license_handler import verify_license
-
-
-class LicenseWindow:
-    def __init__(self):
-        self.window = tk.Tk()
-        self.window.title("ライセンス認証")
-        self.setup_ui()
-
-    def setup_ui(self):
-        # ライセンスウィンドウのUI設定
-        self.license_entry = tk.Entry(self.window)
-        # ... 残りの実装
-
-    def verify_and_save(self):
-        license_key = self.license_entry.get()
-        if verify_license(license_key):
-            self.window.destroy()
-            return True
-        return False
+def create_license_window(root):
+    global license_entry, license_window
+    license_window = tk.Toplevel(root)
+    license_window.title("ライセンスキー認証画面")
+    license_window.geometry("800x600")  # ウィンドウサイズを設定
+    tk.Label(license_window, text="ライセンスキーを入力してください:").pack(pady=10)
+    license_entry = tk.Entry(license_window, width=30)
+    license_entry.pack(pady=5)
+    tk.Button(license_window, text="認証", command=check_license).pack(pady=10)
+    # ウィンドウを閉じるときの処理を設定
+    license_window.protocol("WM_DELETE_WINDOW", on_closing)
